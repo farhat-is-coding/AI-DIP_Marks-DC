@@ -3,6 +3,7 @@ from tkinter import filedialog
 from PIL import Image
 from PIL import ImageTk
 from PIL.ImageTk import PhotoImage
+import os
 
 window = tk.Tk()
 
@@ -23,7 +24,12 @@ def upload_image():
 canvas = tk.Canvas(window, bg ="#FFFFFF", width=1200, height=800, bd = 0, highlightthickness = 0, relief ="ridge")
 canvas.place(x = 0, y = 0)
 
-background_image = PhotoImage(Image.open("bg_img.jpg"))
+#getting the path to the current working directory
+script_dir = os.path.dirname(os.path.abspath(__file__))
+
+# background image
+bg_image_path = os.path.join(script_dir, 'bg_img.jpg')
+background_image = ImageTk.PhotoImage(Image.open(bg_image_path))
 canvas.create_image(0, 0, anchor=tk.NW, image=background_image)
 
 canvas.create_text(300, 10, anchor="nw", text="Marks Detector & Calculator", fill="#FFFFFF", font=("Bold", 35))
@@ -36,7 +42,8 @@ upload_button.place(x=320, y=60, width=120, height=40)
 add_to_excel_button = tk.Button(window, text="Add to Excel File", width=20, height=2, font=("Bold", 12), bg= "#6CB4EE", fg="white")
 add_to_excel_button.place(x=890, y=60, width=120, height=40)
 
-default_image = ImageTk.PhotoImage(Image.open("gojo.jpg").resize((550, 500)))
+gojo_image_path = os.path.join(script_dir, 'gojo.jpg')
+default_image = ImageTk.PhotoImage(Image.open(gojo_image_path).resize((550, 500)))
 image_item = canvas.create_image(100, 100, anchor="nw", image=default_image)
 
 # Create text area for information
