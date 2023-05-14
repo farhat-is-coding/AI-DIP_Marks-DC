@@ -5,15 +5,26 @@ from PIL import Image
 from PIL import ImageTk
 from PIL.ImageTk import PhotoImage
 import os
+
+# importing own modules
 from model_work import run_model
+from image_processing import image_processing
+
+current_path = 'E:/University/Semester 6 - Spring 2023/Digital Image Processing/LabWork/dip_project/AI-DIP_Marks-DC/final'
+os.chdir(current_path)
 
 window = tk.Tk()
 
 window.geometry("1000x600")
+window.title("Marks Detector & Calculator")
 
-# Define function to handle file upload
+# main tasks
+def rest_of_tasks(filename):
+    marks_box_path, roll_no_box_path, subject_name_path = run_model(current_path, filename)
+    image_processing(current_path, marks_box_path)
 
 
+# function for file upload
 def upload_image():
     # Only allow JPG and PNG files
     filetypes = [("JPEG Image", "*.jpg"), ("PNG Image", "*.png")]
@@ -24,10 +35,8 @@ def upload_image():
         # canvas.itemconfig(image_item, image=image
         image_item.config(image=image)
         canvas.image_item = image
-        # image taken - now send to model
-        run_model(filename)
         print(filename)
-
+        rest_of_tasks(filename)
 
 
 # Create a Canvas widget
@@ -48,7 +57,7 @@ canvas.create_text(200, 10, anchor="nw", text="Marks Detector & Calculator",
 
 # Create button to upload image
 upload_button = tk.Button(window, text="Upload Image", command=upload_image, height=2,
-                          borderwidth=5, highlightthickness=10, font=("Times New Roman",12, "bold"), bg="#6CB4EE", fg="white")
+                          borderwidth=5, highlightthickness=10, font=("Times New Roman", 12, "bold"), bg="#6CB4EE", fg="white")
 upload_button.place(x=250, y=80, width=150, height=40)
 
 # Create button to add to Excel file
@@ -88,3 +97,4 @@ info_text = tk.Text(frame, height=20, width=50)
 info_text.pack()
 
 window.mainloop()
+

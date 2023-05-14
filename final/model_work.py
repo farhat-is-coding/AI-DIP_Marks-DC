@@ -1,4 +1,4 @@
-def run_model(img_input):
+def run_model(current_path, img_input):
     # cloning the yolov5 repo
     # only needs to be run once
     # import subprocess
@@ -10,8 +10,7 @@ def run_model(img_input):
     # change as necessary!!!
 
     import os
-    os.chdir('E:/University/Semester 6 - Spring 2023/Digital Image Processing/LabWork/dip_project/AI-DIP_Marks-DC/final/yolov5')
-
+    os.chdir(current_path + '/yolov5')
 
     # also needs to be run only once to satisfy requirements
     # subprocess.run(['pip', 'install', '-r', 'requirements.txt'])
@@ -60,10 +59,11 @@ def run_model(img_input):
 
 
 
-    # listing where the sropped images are stored
+    # listing where the cropped images are stored
     crop_images_path = image_path+'/crops' 
     print(crop_images_path)
 
+    img_name = os.path.basename(img_name) # getting the image name from the path
     crop_subfolders = [f for f in os.listdir(crop_images_path) if os.path.isdir(os.path.join(crop_images_path, f))]   
 
     print(crop_subfolders)
@@ -76,12 +76,16 @@ def run_model(img_input):
     print(roll_no_box_path)
     print(subject_name_path)
 
+    
+    return marks_box_path, roll_no_box_path, subject_name_path
+
+
 
     # the above paths have them images
 
-    roll_no_img = cv2.imread(roll_no_box_path)
-    subject_name_img = cv2.imread(subject_name_path)
-    marks_box_img = cv2.imread(marks_box_path)
+    # roll_no_img = cv2.imread(roll_no_box_path)
+    # subject_name_img = cv2.imread(subject_name_path)
+    # marks_box_img = cv2.imread(marks_box_path)
 
     # cv2.imshow('roll no img', roll_no_img)
     # cv2.waitKey()
