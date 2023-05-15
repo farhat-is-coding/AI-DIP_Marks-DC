@@ -88,7 +88,7 @@ image_item.pack()
 canvas.create_window(100, 120, anchor='nw', window=frame0)
 
 
-# frame for the text area
+# frame for the text area   
 frame = tk.Frame(canvas, bg='white', bd=5)
 frame.place(x=550, y=120, width=400, height=400)
 # Create text area for information
