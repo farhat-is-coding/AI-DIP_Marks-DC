@@ -44,7 +44,7 @@ def run_model(current_path, img_input):
 
     # running the model on the image
     results = model(img) # returns batch of images
-
+    # results.save()
     crops = results.crop(save=True)  # cropped detections dictionary
 
 
@@ -78,23 +78,3 @@ def run_model(current_path, img_input):
 
     
     return marks_box_path, roll_no_box_path, subject_name_path
-
-
-
-    # the above paths have them images
-
-    # roll_no_img = cv2.imread(roll_no_box_path)
-    # subject_name_img = cv2.imread(subject_name_path)
-    # marks_box_img = cv2.imread(marks_box_path)
-
-    # cv2.imshow('roll no img', roll_no_img)
-    # cv2.waitKey()
-    # cv2.destroyAllWindows()
-
-    # cv2.imshow('subject name', subject_name_img)
-    # cv2.waitKey()
-    # cv2.destroyAllWindows()
-
-    # cv2.imshow('marks box', marks_box_img)
-    # cv2.waitKey()
-    # cv2.destroyAllWindows()

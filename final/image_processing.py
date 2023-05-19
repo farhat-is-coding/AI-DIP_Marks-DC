@@ -11,11 +11,14 @@ def image_processing(current_path, box_path):
     # Read the image
     try:
         img = cv2.imread(box_path, 0)
+        print(box_path)
     except:
         print("cannot open file")
         # exit the program
         print("----------------------\nEXITING - CANNOT OPEN FILE\n----------------------")
         exit()
+
+    # print("Path for processing is: " + current_path)
 
     # Thresholding the image
     (thresh, img_bin) = cv2.threshold(
@@ -94,11 +97,15 @@ def image_processing(current_path, box_path):
     # deleting everything from the results directory first 
     for filename in os.listdir('./results'):
         os.remove('./results/' + filename)
+    print("After emptying results folder")
+    print(len(contours))
 
     for c in reversed(contours): # the first three detected are the full boxes (we don't need that)
             # Returns the location and width,height for every contour
             x, y, w, h = cv2.boundingRect(c)
-            if (w < 180 and h < 180):
+            print(w, h)
+            if (50 < w < 210 and 50 < h < 200):
+                print(idx)
                 idx += 1
                 new_img = img[y:y+h, x:x+w]
                 cv2.imwrite("./results/result"+str(idx) + '.png', new_img)

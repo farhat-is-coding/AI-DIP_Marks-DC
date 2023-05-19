@@ -18,7 +18,7 @@ def upload_image():
         # Display selected image in the image container
         image = ImageTk.PhotoImage(Image.open(filename).resize((400,400)))
         canvas.itemconfig(image_item, image=image)
-        canvas.image_item = image
+        canvas.default_image = image
 
 # Create a Canvas widget
 canvas = tk.Canvas(window, bg ="#FFFFFF", width=1000, height=600, bd = 0, highlightthickness = 0, relief ="ridge")

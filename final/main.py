@@ -10,7 +10,13 @@ import os
 from model_work import run_model
 from image_processing import image_processing
 
-current_path = 'E:/University/Semester 6 - Spring 2023/Digital Image Processing/LabWork/dip_project/AI-DIP_Marks-DC/final'
+from marks_calculate import GetMarks, GetRollNo, GetSubject
+from cornerplot import Plot
+import csv
+import easyocr
+
+
+current_path = 'C:/__Sandbox/python/university/dip/Marks D&C/final'
 os.chdir(current_path)
 
 window = tk.Tk()
@@ -18,11 +24,79 @@ window = tk.Tk()
 window.geometry("1000x600")
 window.title("Marks Detector & Calculator")
 
+
+roll_no=None
+subject=None 
+total_marks=None
+obtained_marks=None
+
+def add_data_to_csv():
+    # Check if the file exists
+    file_exists = False
+    try:
+        with open('scores.csv', 'r') as file:
+            reader = csv.reader(file)
+            if any(reader):
+                file_exists = True
+    except FileNotFoundError:
+        print('fail')
+        return
+    
+    print(roll_no, subject, total_marks, obtained_marks)
+    # Open the CSV file in append mode
+    with open('scores.csv', 'a', newline='') as file:
+        writer = csv.writer(file)
+        
+        # Write the header row if the file is empty
+        if not file_exists:
+            writer.writerow(['Roll No', 'Subject', 'Total Marks', 'Obtained Marks'])
+        
+        # Write the data row
+        if not(roll_no and subject and total_marks and obtained_marks):
+            return
+        writer.writerow([roll_no, subject, sum(total_marks), sum(obtained_marks)])
+
+
 # main tasks
 def rest_of_tasks(filename):
-    marks_box_path, roll_no_box_path, subject_name_path = run_model(current_path, filename)
-    image_processing(current_path, marks_box_path)
+    global roll_no
+    global subject
+    global obtained_marks
+    global total_marks
 
+    reader = easyocr.Reader(['en'])
+
+    marks_box_path, roll_no_box_path, subject_name_path = run_model(current_path, filename)
+
+    roll_no = GetRollNo(roll_no_box_path, reader)
+    subject = GetSubject(subject_name_path, reader)
+    image_processing(current_path, marks_box_path) # creates boxes
+
+    total_marks = []
+
+    for i in range(10):
+        marks = GetMarks(f'results/result{i+11}.png', reader)
+        total_marks.extend([marks])
+
+    obtained_marks = []
+    for i in range(10):
+        marks = GetMarks(f'results/result{i+21}.png', reader)
+        obtained_marks.extend([marks])
+
+    print('Student Roll No: '+ ''.join(roll_no))
+    print('Subject Name: ' + ''.join(subject))
+    print('Total Marks: ' + str(sum(total_marks)))
+    print('Obtained Marks: ' + str(sum(obtained_marks)))
+
+    # ADD to csv
+    # add_data_to_csv(roll_no, subject, total_marks, obtained_marks)
+    data = f"Roll No: {roll_no}\tSubject: {subject}\tTotal Marks: {sum(total_marks)}\tObtained Marks: {sum(obtained_marks)}\n\n"
+    info_text.insert(tk.END, data)
+
+def visualize():
+    Plot()
+
+    
 
 # function for file upload
 def upload_image():
@@ -61,7 +135,7 @@ upload_button = tk.Button(window, text="Upload Image", command=upload_image, hei
 upload_button.place(x=250, y=80, width=150, height=40)
 
 # Create button to add to Excel file
-add_to_excel_button = tk.Button(window, text="Add to Excel File", height=2, borderwidth=5,
+add_to_excel_button = tk.Button(window, text="Add to Excel File", height=2, borderwidth=5, command=add_data_to_csv,
                                 highlightthickness=10, font=("Times New Roman", 12, "bold"), bg="#6CB4EE", fg="white")
 add_to_excel_button.place(x=680, y=80, width=150, height=40)
 
@@ -77,12 +151,18 @@ frame0.place(x=100, y=120, width=400, height=400)
 
 # Load the image and create an ImageTk object
 gojo_image_path = os.path.join(script_dir, 'gojo.jpg')
-default_image = ImageTk.PhotoImage(
-    Image.open(gojo_image_path).resize((400, 400)))
+default_image = ImageTk.PhotoImage(Image.open(gojo_image_path).resize((400, 400)))
 
 # Create an image item as a child of the frame
 image_item = tk.Label(frame0, image=default_image)
 image_item.pack()
+
+
+#button
+visualize_button = tk.Button(window, text="Visualize", height=2, borderwidth=5,
+                             command= visualize,
+                                highlightthickness=10, font=("Times New Roman", 12, "bold"), bg="#6CB4EE", fg="white")
+visualize_button.place(x=450, y=540, width=150, height=40)
 
 # Create a window inside the canvas to hold the frame
 canvas.create_window(100, 120, anchor='nw', window=frame0)
