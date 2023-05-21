@@ -69,10 +69,14 @@ def rest_of_tasks(filename):
 
     marks_box_path, roll_no_box_path, subject_name_path = run_model(current_path, filename)
 
+    # reading the roll no and the subject
     roll_no = GetRollNo(roll_no_box_path, reader)
     subject = GetSubject(subject_name_path, reader)
-    image_processing(current_path, marks_box_path) # creates boxes
 
+    # we need to make individual boxes for the marks things
+    image_processing(current_path, marks_box_path) 
+
+    # reading total and obtained marks
     total_marks = []
 
     for i in range(10):
@@ -84,14 +88,19 @@ def rest_of_tasks(filename):
         marks = GetMarks(f'results/result{i+21}.png', reader)
         obtained_marks.extend([marks])
 
+    print("\n-------------------------------------")
     print('Student Roll No: '+ ''.join(roll_no))
     print('Subject Name: ' + ''.join(subject))
     print('Total Marks: ' + str(sum(total_marks)))
     print('Obtained Marks: ' + str(sum(obtained_marks)))
+    print("-------------------------------------\n")
+
 
     # ADD to csv
     # add_data_to_csv(roll_no, subject, total_marks, obtained_marks)
-    data = f"Roll No: {roll_no}\tSubject: {subject}\tTotal Marks: {sum(total_marks)}\tObtained Marks: {sum(obtained_marks)}\n\n"
+    # moved to add to excel file button
+    # displaying data in tkinter text box
+    data = f"FOR CURRENT FILE: \nRoll No: {roll_no}\nSubject: {subject}\nTotal Marks: {sum(total_marks)}\nObtained Marks: {sum(obtained_marks)}\n\n"
     info_text.insert(tk.END, data)
 
 def visualize():

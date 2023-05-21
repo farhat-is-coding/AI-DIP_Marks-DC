@@ -17,12 +17,13 @@ def convert_string(string):
     string = string.replace('.', '')
     string = string.replace('-', '')
     string = string.replace(' ', '')
+    string = string.replace('c', '0')
 
     return string
 
 def GetMarks(image_path, reader):
     numbers = 0
-    print(image_path)
+    print(f"\nImage path: {image_path}")
     # reader = easyocr.Reader(['en'])
     image = cv2.imread(image_path, 0)
     result = reader.readtext(image)

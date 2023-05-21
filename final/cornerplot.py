@@ -7,17 +7,15 @@ import csv
 import numpy as np
 import scipy.stats as stats
 
-def getMarks():
+def getMarksFromCSV():
     obtained_marks_list = []
 
+    # reading all obtained marks from csv file
     with open('scores.csv', 'r') as file:
         reader = csv.DictReader(file)
         for row in reader:
             obtained_marks = int(row['Obtained Marks'])
             obtained_marks_list.append(obtained_marks)
-
-    # okay so we have a file jis main scores as a dictionary saved hain
-    # usko read kr k ek list main store kr rhay
 
     # for i in range(101-len(obtained_marks_list)):
     #     obtained_marks_list.append(0)
@@ -30,11 +28,11 @@ def Plot():
     x = range(101)
 
     # Example marks obtained (replace with your actual data)
-    marks_obtained = getMarks()
+    marks_obtained = getMarksFromCSV()
 
     # Create a Tkinter window
     window = tk.Tk()
-    window.title("Graph Example")
+    window.title("Graph")
 
     # Create a Figure object and specify the size (width and height) of the graph
     figure = Figure(figsize=(6, 4), dpi=100)
@@ -42,7 +40,6 @@ def Plot():
     # Create a subplot within the Figure
     subplot = figure.add_subplot(111)
 
-    # Example dataset (replace with your actual data)
     data = marks_obtained
 
     # Calculate the standard deviation
@@ -63,7 +60,7 @@ def Plot():
     subplot.legend()
 
     # Create a canvas widget for displaying the graph
-    canvas = FigureCanvasTkAgg(figure, master=window)
+    canvas = FigureCanvasTkAgg(figure, master=window) # used to display Matplotlib graph in tkinter
     canvas.draw()
     canvas.get_tk_widget().pack()
 
