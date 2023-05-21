@@ -1,3 +1,5 @@
+# make a scatter plot of data points and calculate the standard deviation
+
 import tkinter as tk
 from matplotlib.figure import Figure
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
@@ -13,6 +15,9 @@ def getMarks():
         for row in reader:
             obtained_marks = int(row['Obtained Marks'])
             obtained_marks_list.append(obtained_marks)
+
+    # okay so we have a file jis main scores as a dictionary saved hain
+    # usko read kr k ek list main store kr rhay
 
     # for i in range(101-len(obtained_marks_list)):
     #     obtained_marks_list.append(0)

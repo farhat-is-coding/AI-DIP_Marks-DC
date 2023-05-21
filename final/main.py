@@ -1,4 +1,4 @@
-# this is the startting point of the application
+# this is the starting point of the application
 import tkinter as tk
 from tkinter import filedialog
 from PIL import Image
@@ -15,8 +15,9 @@ from cornerplot import Plot
 import csv
 import easyocr
 
-
-current_path = 'C:/__Sandbox/python/university/dip/Marks D&C/final'
+# modify this current path as needed
+# current_path = 'C:/__Sandbox/python/university/dip/Marks D&C/final'
+current_path = 'E:/University/Semester 6 - Spring 2023/Digital Image Processing/LabWork/dip_project/AI-DIP_Marks-DC/final'
 os.chdir(current_path)
 
 window = tk.Tk()

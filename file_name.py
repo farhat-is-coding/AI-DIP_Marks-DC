@@ -1,6 +1,7 @@
+# script to easily rename files
 import os
 
-# Directory containing the images
+# Directory containing the images - figure out a way to automate this?
 directory = r'D:\Pictures\database\exam pprs'
 
 # Iterate over the files in the directory

@@ -104,6 +104,7 @@ def image_processing(current_path, box_path):
             # Returns the location and width,height for every contour
             x, y, w, h = cv2.boundingRect(c)
             print(w, h)
+            # the best values for removing all edge cases and only getting the boxes we need
             if (50 < w < 210 and 50 < h < 200):
                 print(idx)
                 idx += 1
