@@ -15,10 +15,10 @@
 #
 # How the Model Works
 Suppose we have a Answer Sheet like the following:
-<img src='images/test_sheet.jpg'>
-
+<img src='images/test_sheet.jpg' width='500px'>
+<br/>
 Our Model will Scan this, and detect the Portion we need from this:
-<img src='images/test_sheet_result.jpg'>
+<img src='images/test_sheet_result.jpg' width='500px'>
 
 #
 ## Final Result
